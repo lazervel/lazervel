@@ -1,0 +1,295 @@
+<IfModule mod_rewrite.c>
+  # Configure .apache <.htaccess> [SETUP]
+  # PREVENT: Don't index to any Directories of files...
+	<IfModule mod_negotiation.c>
+		Options -MultiViews -Indexes
+	</IfModule>
+
+  # Enable the rewrite engine
+  RewriteEngine On
+
+  # Handle Authorization Header
+  RewriteCond %{HTTP:Authorization} .
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  # Redirect Trailing Slashes If Not A Folder...
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_URI} (.+)/$
+  RewriteRule ^ %1 [L,R=301]
+
+  # Send Requests To Front Controller...
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule ^ public/index.php [L]
+
+  # Enable the rewrite engine
+  RewriteEngine On
+
+  # Allow access to DIR [public] & [resources] Files...
+  # Otherwise index always [public/index.php] page.
+  RewriteCond %{REQUEST_URI} !/public/
+  RewriteCond %{REQUEST_URI} !/resources/
+  RewriteRule ^(.*)$ public/index.php [L]
+</IfModule>
+
+<IfModule mod_deflate.c>
+  # Compress JSON
+  AddOutputFilterByType DEFLATE application/json   
+  AddOutputFilterByType DEFLATE text/json          
+  AddOutputFilterByType DEFLATE text/x-json        
+  AddOutputFilterByType DEFLATE application/ld+json
+  
+  # Compress HTML
+  AddOutputFilterByType DEFLATE text/html        
+
+  # Favicon (cannot be renamed)
+  AddOutputFilterByType DEFLATE image/x-icon     
+
+  # Compress HTML Components (HTCs)
+  AddOutputFilterByType DEFLATE text/x-components
+
+  # Compress CSS
+  AddOutputFilterByType DEFLATE text/css         
+
+  # Compress XML
+  AddOutputFilterByType DEFLATE application/xml                       
+  AddOutputFilterByType DEFLATE text/xml                              
+  AddOutputFilterByType DEFLATE application/xml-external-parsed-entity
+  AddOutputFilterByType DEFLATE text/xml-external-parsed-entity       
+  AddOutputFilterByType DEFLATE application/xml-dtd                   
+  AddOutputFilterByType DEFLATE application/xhtml+xml                 
+
+  # Compress Javascript (js)
+  AddOutputFilterByType DEFLATE application/javascript             
+  AddOutputFilterByType DEFLATE text/javascript                    
+  AddOutputFilterByType DEFLATE text/x-javascript                  
+  AddOutputFilterByType DEFLATE application/x-javascript           
+
+  # Compress Manifest files (Chrome/Browser file)
+  AddOutputFilterByType DEFLATE application/x-web-app-manifest+json
+  AddOutputFilterByType DEFLATE application/cache-manifest         
+
+  # Compress Media
+  AddOutputFilterByType DEFLATE application/octet-stream           
+  AddOutputFilterByType DEFLATE application/ogg                    
+  AddOutputFilterByType DEFLATE application/pdf                    
+  AddOutputFilterByType DEFLATE application/x-shockwave-flash      
+  AddOutputFilterByType DEFLATE application/zip                    
+  AddOutputFilterByType DEFLATE application/x-www-form-urlencoded  
+  AddOutputFilterByType DEFLATE audio/mpeg                         
+  AddOutputFilterByType DEFLATE audio/x-ms-wma                     
+  AddOutputFilterByType DEFLATE audio/vnd.rn-realaudio             
+  AddOutputFilterByType DEFLATE audio/x-wav                        
+  AddOutputFilterByType DEFLATE audio/mp3                          
+  AddOutputFilterByType DEFLATE image/gif                          
+  AddOutputFilterByType DEFLATE image/jpeg                         
+  AddOutputFilterByType DEFLATE image/tiff                         
+  AddOutputFilterByType DEFLATE image/png                          
+  AddOutputFilterByType DEFLATE image/vnd.microsoft.icon           
+  AddOutputFilterByType DEFLATE image/vnd.djvu                     
+  AddOutputFilterByType DEFLATE image/svg+xml                      
+
+  # Compress Multipart
+  AddOutputFilterByType DEFLATE multipart/mixed                    
+  AddOutputFilterByType DEFLATE multipart/alternative              
+  AddOutputFilterByType DEFLATE multipart/form-data                
+
+  # Compress Data interchange
+  AddOutputFilterByType DEFLATE text/csv                           
+  AddOutputFilterByType DEFLATE text/plain                         
+
+  # Compress VIDEO
+  AddOutputFilterByType DEFLATE video/mpeg                         
+  AddOutputFilterByType DEFLATE video/mp4                          
+  AddOutputFilterByType DEFLATE video/quicktime                    
+  AddOutputFilterByType DEFLATE video/x-ms-wmv                     
+  AddOutputFilterByType DEFLATE video/x-msvideo                    
+  AddOutputFilterByType DEFLATE video/x-flv                        
+  AddOutputFilterByType DEFLATE video/webm                         
+
+  # Remove browser bugs (only needed for really old browsers)
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+  Header append Vary User-Agent
+</IfModule>
+
+# ---------------------------------------------------------
+# | SET Expires Caching (All type Files Extenstion)
+# ---------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # SET Default Expires Cache-Control: max-age=31536000
+  ExpiresDefault "access plus 1 year"
+
+  # JSON
+  ExpiresByType application/json                           "access plus 1 month"
+  ExpiresByType text/json                                  "access plus 1 month"
+  ExpiresByType text/x-json                                "access plus 1 month"
+  ExpiresByType application/ld+json                        "access plus 1 month"
+  
+  # HTML Cache
+  ExpiresByType text/html                                  "access plus 6 month"
+
+  # Favicon (cannot be renamed)
+  ExpiresByType image/x-icon                               "access plus 6 month"
+
+  # HTML Components (HTCs)
+  ExpiresByType text/x-components                          "access plus 6 month"
+
+  # CSS
+  ExpiresByType text/css                                   "access plus 6 month"
+
+  # XML
+  ExpiresByType application/xml                            "access plus 10 second"
+  ExpiresByType text/xml                                   "access plus 10 second"
+  ExpiresByType application/xml-external-parsed-entity     "access plus 10 second"
+  ExpiresByType text/xml-external-parsed-entity            "access plus 10 second"
+  ExpiresByType application/xml-dtd                        "access plus 10 second"
+  ExpiresByType application/xhtml+xml                      "access plus 10 second"
+
+  # Javascript (js)
+  ExpiresByType application/javascript                     "access plus 6 month"
+  ExpiresByType text/javascript                            "access plus 6 month"
+  ExpiresByType text/x-javascript                          "access plus 6 month"
+  ExpiresByType application/x-javascript                   "access plus 6 month"
+
+  # Manifest files (Chrome/Browser file)
+  ExpiresByType application/x-web-app-manifest+json        "access plus 6 month"
+  ExpiresByType application/cache-manifest                 "access plus 6 month"
+
+  # Media Cache.
+  ExpiresByType application/ogg                            "access plus 6 month"
+  ExpiresByType application/pdf                            "access plus 6 month"
+  ExpiresByType application/x-shockwave-flash              "access plus 6 month"
+  ExpiresByType application/zip                            "access plus 6 month"
+  ExpiresByType audio/mpeg                                 "access plus 6 month"
+  ExpiresByType audio/x-ms-wma                             "access plus 6 month"
+  ExpiresByType audio/vnd.rn-realaudio                     "access plus 6 month"
+  ExpiresByType audio/x-wav                                "access plus 6 month"
+  ExpiresByType audio/mp3                                  "access plus 6 month"
+  ExpiresByType image/gif                                  "access plus 6 month"
+  ExpiresByType image/jpeg                                 "access plus 6 month"
+  ExpiresByType image/tiff                                 "access plus 6 month"
+  ExpiresByType image/png                                  "access plus 6 month"
+  ExpiresByType image/vnd.microsoft.icon                   "access plus 6 month"
+  ExpiresByType image/vnd.djvu                             "access plus 6 month"
+  ExpiresByType image/svg+xml                              "access plus 6 month"
+
+  # Multipart Cache
+  ExpiresByType multipart/mixed                            "access plus 6 month"
+  ExpiresByType multipart/alternative                      "access plus 6 month"
+  ExpiresByType multipart/form-data                        "access plus 6 month"
+
+  # Data interchange Cache
+  ExpiresByType text/csv                                   "access plus 6 month"
+  ExpiresByType text/plain                                 "access plus 6 month"
+
+  # VIDEO Cache
+  ExpiresByType video/mpeg                                 "access plus 6 month"
+  ExpiresByType video/mp4                                  "access plus 6 month"
+  ExpiresByType video/quicktime                            "access plus 6 month"
+  ExpiresByType video/x-ms-wmv                             "access plus 6 month"
+  ExpiresByType video/x-msvideo                            "access plus 6 month"
+  ExpiresByType video/x-flv                                "access plus 6 month"
+  ExpiresByType video/webm                                 "access plus 6 month"
+
+  # VND
+  ExpiresByType application/vnd.openxmlformats-officedocument.presentationml.presentation "access plus 1 hour"
+  ExpiresByType application/vnd.android.package-archive                                   "access plus 1 hour"
+  ExpiresByType application/vnd.oasis.opendocument.text                                   "access plus 1 hour"
+  ExpiresByType application/vnd.oasis.opendocument.spreadsheet                            "access plus 1 hour"
+  ExpiresByType application/vnd.oasis.opendocument.presentation                           "access plus 1 hour"
+  ExpiresByType application/vnd.oasis.opendocument.graphics                               "access plus 1 hour"
+  ExpiresByType application/vnd.ms-excel                                                  "access plus 1 hour"
+  ExpiresByType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet         "access plus 1 hour"
+  ExpiresByType application/vnd.ms-powerpoint                                             "access plus 1 hour"
+  ExpiresByType application/msword                                                        "access plus 1 hour"
+  ExpiresByType application/vnd.openxmlformats-officedocument.wordprocessingml.document   "access plus 1 hour"
+  ExpiresByType application/vnd.mozilla.xul+xml                                           "access plus 1 hour"
+</IfModule>
+
+# Webapplication Protection:
+# ------------------------------------------------------------------------
+# | Protect webapplication for copier any third party webcopier tools
+# | HTTrackers and any webcopier Softwears (Boost Securtiy of webApp)
+# ------------------------------------------------------------------------
+RewriteEngine On 
+RewriteCond %{HTTP_USER_AGENT} ^BlackWidow [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Bot\ mailto:craftbot@yahoo.com [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ChinaClaw [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Custo [OR]
+RewriteCond %{HTTP_USER_AGENT} ^DISCo [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Download\ Demon [OR]
+RewriteCond %{HTTP_USER_AGENT} ^eCatch [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EirGrabber [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EmailSiphon [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EmailWolf [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Express\ WebPictures [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ExtractorPro [OR]
+RewriteCond %{HTTP_USER_AGENT} ^EyeNetIE [OR]
+RewriteCond %{HTTP_USER_AGENT} ^FlashGet [OR]
+RewriteCond %{HTTP_USER_AGENT} ^GetRight [OR]
+RewriteCond %{HTTP_USER_AGENT} ^GetWeb! [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Go!Zilla [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Go-Ahead-Got-It [OR]
+RewriteCond %{HTTP_USER_AGENT} ^GrabNet [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Grafula [OR]
+RewriteCond %{HTTP_USER_AGENT} ^HMView [OR]
+RewriteCond %{HTTP_USER_AGENT} HTTrack [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} ^Image\ Stripper [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Image\ Sucker [OR]
+RewriteCond %{HTTP_USER_AGENT} Indy\ Library [NC,OR]
+RewriteCond %{HTTP_USER_AGENT} ^InterGET [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Internet\ Ninja [OR]
+RewriteCond %{HTTP_USER_AGENT} ^JetCar [OR]
+RewriteCond %{HTTP_USER_AGENT} ^JOC\ Web\ Spider [OR]
+RewriteCond %{HTTP_USER_AGENT} ^larbin [OR]
+RewriteCond %{HTTP_USER_AGENT} ^LeechFTP [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Mass\ Downloader [OR]
+RewriteCond %{HTTP_USER_AGENT} ^MIDown\ tool [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Mister\ PiX [OR]
+RewriteCond %{HTTP_USER_AGENT} uuuu7u^Navroad [OR]
+RewriteCond %{HTTP_USER_AGENT} ^NearSite [OR]
+RewriteCond %{HTTP_USER_AGENT} ^NetAnts [OR]
+RewriteCond %{HTTP_USER_AGENT} ^NetSpider [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Net\ Vampire [OR]
+RewriteCond %{HTTP_USER_AGENT} ^NetZIP [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Octopus [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Offline\ Explorer [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Offline\ Navigator [OR]
+RewriteCond %{HTTP_USER_AGENT} ^PageGrabber [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Papa\ Foto [OR]
+RewriteCond %{HTTP_USER_AGENT} ^pavuk [OR]
+RewriteCond %{HTTP_USER_AGENT} ^pcBrowser [OR]
+RewriteCond %{HTTP_USER_AGENT} ^RealDownload [OR]
+RewriteCond %{HTTP_USER_AGENT} ^ReGet [OR]
+RewriteCond %{HTTP_USER_AGENT} ^SiteSnagger [OR]
+RewriteCond %{HTTP_USER_AGENT} ^SmartDownload [OR]
+RewriteCond %{HTTP_USER_AGENT} ^SuperBot [OR]
+RewriteCond %{HTTP_USER_AGENT} ^SuperHTTP [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Surfbot [OR]
+RewriteCond %{HTTP_USER_AGENT} ^tAkeOut [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Teleport\ Pro [OR]
+RewriteCond %{HTTP_USER_AGENT} ^VoidEYE [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Web\ Image\ Collector [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Web\ Sucker [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebAuto [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebCopier [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebFetch [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebGo\ IS [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebLeacher [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebReaper [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebSauger [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Website\ eXtractor [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Website\ Quester [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebStripper [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebWhacker [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WebZIP [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Wget [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Widow [OR]
+RewriteCond %{HTTP_USER_AGENT} ^WWWOFFLE [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Xaldon\ WebSpider [OR]
+RewriteCond %{HTTP_USER_AGENT} ^Zeus
+RewriteRule ^.* - [F,L]

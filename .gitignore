@@ -1,0 +1,29 @@
+// Session cookie parameters set karo (10 seconds)
+session_set_cookie_params(10); // Cookie 10 seconds tak chalegi
+
+// Session garbage collection max lifetime set karo (10 seconds)
+// ini_set('session.gc_maxlifetime', 10);
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Not Found</title>
+
+  <style>
+    *, :after, :before{ box-sizing:border-box; border: 0 solid #e2e8f0;} html{ -webkit-text-size-adjust:100%; margin:0; line-height:1.15;} body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";} body::after{ content: attr(data-app-name); position:absolute; font-size:14px; top:0; left:0; color: #6464f7; margin: 4px 8px;} .container{ position:relative; display:flex; justify-content:center; min-height:100vh; align-items:center; background-color: #f7fafc; background-color: rgba(247, 250, 252, 1);} .wrap{ padding: 0 1.5rem 0 1.5rem;max-width:900px;margin:0 auto;} .group{ display:flex;justify-content:flex-start;align-items:center;} .br-1{ padding:4px 1rem 4px 1rem; border-right-width: 1px;border-color: #cbd5e0; border-color: rgba(203, 213, 224,1);} .px-t{ letter-spacing:.05em;color: #a0aec0;color: rgba(160, 174, 192, 1);font-size:1.125rem;} .px-s{ text-transform:uppercase;margin-left:1rem;}
+  </style>
+
+</head>
+<body data-app-name="Lazervel Framework — v1.0.0">
+  <div class="container"><div class="wrap"><div class="group">
+    <div class="px-t br-1">404</div>
+    <div class="px-s px-t">Not Found</div>
+  </div></div></div>
+</body>
+</html>
