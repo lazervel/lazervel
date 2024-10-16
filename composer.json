@@ -15,7 +15,7 @@
     }
   },
   "require": {
-    "lazervel/framework": "*"
+    "lazervel/framework": "1.0.0"
   },
   "authors": [
     {
