@@ -29,6 +29,12 @@
       "dont-discover": []
     }
   },
+  "funding": [
+    {
+      "type": "Github",
+      "url": "https://github.com/shahzadamodassir"
+    }
+  ],
   "scripts": {
     "post-root-package-install": [
       "@php -r \"is_dir('database/export') || mkdir('database/export');\"",
