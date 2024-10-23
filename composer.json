@@ -2,7 +2,7 @@
   "name": "lazervel/lazervel",
   "description": "The fast web skeleton application for the Lazervel framework.",
   "type": "project",
-  "keywords": ["lazervel", "framework"],
+  "keywords": ["lazervel", "framework", "php"],
   "license": "MIT",
   "autoload": {
     "files": [
@@ -11,17 +11,37 @@
     ],
     "psr-4": {
       "App\\": "app/",
+      "CrateDB\\Seeders\\": "cratedb/seeders/",
       "Database\\Seeders\\": "database/seeders/"
     }
   },
   "require": {
-    "lazervel/framework": "^1.0"
+    
   },
   "authors": [
     {
       "name": "Shahzada Modassir",
-      "email": "shahzadamodassir@gmail.com",
+      "email": "codingmodassir@gmail.com",
+      "homepage": "https://github.com/shahzadamodassir"
+    },
+    {
+      "name": "Shahzadi Afsara",
+      "email": "shahzadiafsara@gmail.com",
       "homepage": "https://github.com/lazervel"
+    }
+  ],
+  "funding": [
+    {
+      "type": "Opencollective",
+      "url": "https://opencollective.com/shahzadamodassir"
+    },
+    {
+      "type": "Github",
+      "url": "https://github.com/shahzadamodassir"
+    },
+    {
+      "type": "Patreon",
+      "url": "https://patreon.com/shahzadamodassir"
     }
   ],
   "extra": {
@@ -29,12 +49,6 @@
       "dont-discover": []
     }
   },
-  "funding": [
-    {
-      "type": "Github",
-      "url": "https://github.com/shahzadamodassir"
-    }
-  ],
   "scripts": {
     "post-root-package-install": [
       "@php -r \"is_dir('database/export') || mkdir('database/export');\"",
@@ -48,6 +62,6 @@
       "@php -r \"file_exists('database/export/export.sql') || touch('database/export/export.sql');\""
     ]
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true
 }
