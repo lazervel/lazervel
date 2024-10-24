@@ -1,5 +1,3 @@
-use Illuminate\App\Providers;
-use Inaugurate\App\Providers;
 
 blue: rgb(8 48 218)
 green: rgb(19 161 14)
